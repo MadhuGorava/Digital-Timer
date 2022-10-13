@@ -4,6 +4,54 @@ import {Component} from 'react'
 import './index.css'
 
 class DigitalTimer extends Component {
+  state = {
+    isTimerRunning: false,
+    timerLimit: 25,
+    currentRunningSeconds: 0,
+  }
+
+  renderTimerControlOptions = () => {
+    const {isTimerRunning} = this.state
+    const playImageUrl =
+      'https://assets.ccbp.in/frontend/react-js/play-icon-img.png'
+    const stopImageUrl =
+      'https://assets.ccbp.in/frontend/react-js/pause-icon-img.png'
+    const resetImageUrl =
+      'https://assets.ccbp.in/frontend/react-js/reset-icon-img.png'
+    const startStopImage = isTimerRunning ? stopImageUrl : playImageUrl
+    const startStopAltText = isTimerRunning ? 'pause icon' : 'play icon'
+    const startStopText = isTimerRunning ? 'Pause' : 'Start'
+    return (
+      <div className="control-options-container">
+        <button
+          className="start-stop-button"
+          type="button"
+          onClick={this.startStopTimer}
+        >
+          <div className="start-stop-container">
+            <img
+              src={startStopImage}
+              className="start-stop-img"
+              alt={startStopAltText}
+            />
+            <h1 className="start-stop-text">{startStopText}</h1>
+          </div>
+        </button>
+
+        <button
+          className="start-stop-button"
+          type="button"
+          onClick={this.onClickResetTimer}
+        >
+          <div className="start-stop-container">
+            <img src={resetImageUrl} className="reset-img" alt="reset icon" />
+            <h1 className="start-stop-text">Reset</h1>
+          </div>
+        </button>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="app-container">
@@ -15,25 +63,8 @@ class DigitalTimer extends Component {
               <p className="number-text">Paused</p>
             </div>
           </div>
-          <div>
-            <div className="play-pause-container">
-              <div className="buttons-card">
-                <img
-                  src="https://assets.ccbp.in/frontend/react-js/play-icon-img.png"
-                  alt="play icon"
-                  className="icon"
-                />
-                <h1 className="sub-heading">Start</h1>
-              </div>
-              <div className="buttons-card">
-                <img
-                  src="https://assets.ccbp.in/frontend/react-js/reset-icon-img.png"
-                  alt="reset icon"
-                  className="icon"
-                />
-                <h1>restart</h1>
-              </div>
-            </div>
+          <div className="timer-control-container">
+            {this.renderTimerControlOptions()}
             <div className="time-limit-card">
               <p className="limit-text">Set Timer limit</p>
               <div className="buttons">
